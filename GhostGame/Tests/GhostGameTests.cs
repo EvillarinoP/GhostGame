@@ -130,28 +130,44 @@ namespace GhostGame.Tests
 
         }
 
-        //public void WordAdded()
-        //{
-        //    // Arrange
-        //    string word = "rand";
+        [Test]
+        public void TestsIsFullWord()
+        {
+            GhostDictionary dict = new GhostDictionary(_customPath);
+
+            bool isFullWord = dict.isFullWord("random");
+            bool isNotFullWord = dict.isFullWord("rand");
+
+            Assert.IsTrue(isFullWord);
+            Assert.IsFalse(isNotFullWord);
+        }
+
+        [Test]
+        public void TestsIsLeafNode()
+        {
+            string word = "rand";
+
+            LetterNode node = new LetterNode(word);
+            LetterNode sub1 = node.Children["a"];
+            LetterNode sub2 = sub1.Children["n"];
+            LetterNode sub3 = sub2.Children["d"];
+            bool isLeaf = sub3.isLeafNode();
+            bool isNotLeaf = sub1.isLeafNode();
+
+            Assert.IsTrue(isLeaf);
+            Assert.IsFalse(isNotLeaf);
+        }
+
+        [Test]
+        public void TestsLeafNodeCount()
+        {
+            GhostDictionary dict = new GhostDictionary(_customPath);
+            LetterNode node = dict.Words["r"];
+            int count = node.leafNodeCount();
+
+            Assert.AreEqual(count, 2);
+        }
 
 
-        //    // Act
-        //    GhostDictionary dict = new GhostDictionary(_path);
-        //    dict.addWord(word);
-
-        //    // Assert
-        //    Assert.Contains(KeyValuePair<string, LetterNode>(){ })
-        //}
-
-        //[Test]
-        //    public void ()
-        //    {
-        //        // Arrange
-
-        //        // Act
-
-        //        // Assert
-        //    }
     }
 }
