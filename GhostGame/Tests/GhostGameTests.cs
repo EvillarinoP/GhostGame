@@ -53,8 +53,14 @@ namespace GhostGame.Tests
             string word = "rand";
 
             LetterNode node = new LetterNode(word);
+            LetterNode sub1 = node.Children["a"];
+            LetterNode sub2 = sub1.Children["n"];
+            LetterNode sub3 = sub2.Children["d"];
 
             Assert.AreEqual("r", node.Letter);
+            Assert.AreEqual("a", sub1.Letter);
+            Assert.AreEqual("n", sub2.Letter);
+            Assert.AreEqual("d", sub3.Letter);
         }
 
         //public void WordAdded()
