@@ -14,11 +14,6 @@ namespace GhostGame.Tests
     [TestFixture]
     public class GhostGameTests
     {
-        // Arrange
-
-        // Act
-
-        // Assert
         private string _path = @"C:\GhostGame\ghostGameDict.txt";
         private string _customPath = @"C:\GhostGame\customDict.txt";
 

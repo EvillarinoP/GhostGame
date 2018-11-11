@@ -71,9 +71,9 @@ namespace GhostGame.Models
                 _winner = _players[switchPlayer()]; // The other player is the winner.
 
                 if (_dictionary.isFullWord(_wordInPlay)) // Depending on the reason why the letter is a loser, the return message will be different
-                    _resultMsg = _wordInPlay + " is a complete word. " + _winner.Name + " wins the game!";
+                    _resultMsg = _wordInPlay + " is a complete word. <font color=\"#ba1f29\">" + _winner.Name + "</font> wins the game!";
                 else if(!_dictionary.isWordStem(_wordInPlay))
-                    _resultMsg = _wordInPlay + " is not a word. " + _winner.Name + " wins the game!";
+                    _resultMsg = _wordInPlay + " is not a word. <font color=\"#ba1f29\">" + _winner.Name + "</font> wins the game!";
             }
         }
 
