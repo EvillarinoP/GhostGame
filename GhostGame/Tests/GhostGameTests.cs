@@ -63,11 +63,46 @@ namespace GhostGame.Tests
             Assert.AreEqual("d", sub3.Letter);
         }
 
+        [Test]
+        public void ChecksIsLeaf()
+        {
+            string word = "rand";
+
+            LetterNode node = new LetterNode(word);
+            LetterNode sub1 = node.Children["a"];
+            LetterNode sub2 = sub1.Children["n"];
+            LetterNode sub3 = sub2.Children["d"];
+            bool isLeaf = sub3.isLeafNode();
+
+            Assert.IsTrue(isLeaf);
+        }
+
+        [Test]
+        public void GetsTerminalNode()
+        {
+            string word = "rand";
+
+            GhostDictionary dict = new GhostDictionary(_path);
+            LetterNode terminal = dict.terminalNode(word);
+
+            Assert.AreEqual(terminal.Letter, "d");
+        }
+
+        [Test]
+        public void ChecksIsWordStem()
+        {
+            string word = "ran";
+
+            GhostDictionary dict = new GhostDictionary(_path);
+            bool isStem = dict.isWordStem(word);
+
+            Assert.IsTrue(isStem);
+        }
         //public void WordAdded()
         //{
         //    // Arrange
         //    string word = "rand";
-            
+
 
         //    // Act
         //    GhostDictionary dict = new GhostDictionary(_path);
