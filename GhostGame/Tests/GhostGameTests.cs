@@ -55,7 +55,6 @@ namespace GhostGame.Tests
             LetterNode node = new LetterNode(word);
 
             Assert.AreEqual("r", node.Letter);
-            Assert.AreEqual("a", node.Children.Keys.ElementAt(0));
         }
 
         //public void WordAdded()
