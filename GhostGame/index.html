@@ -1,0 +1,115 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="ghostGameStyles.css">
+</head>
+<body>
+    <div hidden="hidden" id="instructionsOverlay" onclick="hideOverlay()">
+        
+            In the game of Ghost, two players take turns building up an
+            English word from left to right. <br /><br />
+            Each player adds one letter per turn. Any stringacter that is not a letter is ignored.<br /><br />
+            The goal is to not complete the spelling of a word: if you add a letter
+            that completes a word (of 4+ letters), or if you add a letter that produces
+            a string that cannot be extended into a word, you lose. <br /><br />
+            Basically, each player should try to extend the game as much as possible, so the rival
+            loses if one of those conditions are met.<br /><br /><br /><br />
+            <p id="closeInstructions">Click anywhere on this dialog to close it</p>
+        
+    </div>
+    <div id="mainContent" class="ghostContent">
+        
+        <h1 id="title" class="ghostContent">Game of Ghost</h1>
+        <h3 id="resultWord" class="ghostContent"> </h3>
+        <div class="ghostContent">
+            <input type="text" id="playerLetterInput" size="1" maxlength="1" class="ghostContent" />
+            <button id="submitBtn" class="ghostContent" hidden="hidden">Send</button>
+            <p id="loadingLbl" class="ghostContent">Loading...</p>
+        </div>
+        <h4 class="ghostContent" id="gameResultLbl" hidden="hidden"></h4>
+        <h4 class="ghostContent" id="gameResultMsg" hidden="hidden"></h4>
+    </div>
+    <button id="showInstructionsBtn" onclick="showOverlay()">Instructions</button>
+
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
+    <script>
+        function hideOverlay() {
+            $("#instructionsOverlay").fadeOut(100);
+        }
+        function showOverlay() {
+            $("#instructionsOverlay").fadeIn(100);
+        }
+        var input = document.getElementById("playerLetterInput");
+        input.addEventListener("keyup", function (event) {
+            event.preventDefault();
+            if (event.keyCode === 13) {
+                document.getElementById("submitBtn").click();
+            }
+        })
+
+        function newGame() {
+            document.getElementById("playerLetterInput").disabled = false;
+            document.getElementById("submitBtn").textContent = "Submit";
+            $('#gameResultLbl').fadeOut(1);
+            $('#gameResultMsg').fadeOut(1);
+            $("#resultWord").fadeOut(1);
+            $.ajax({
+                type: 'GET',
+                url: 'api/GhostWord',
+                success: function (data) {
+                    $('#loadingLbl').hide();
+                    $('#submitBtn').fadeIn(100);
+
+                }
+            })
+            $("#submitBtn").unbind("click");
+            $('#submitBtn').click(function () {
+                submitClick();
+            })
+        }
+
+        function submitClick() {
+            var newLetter = $('#playerLetterInput').val().toLowerCase();
+            if (!/^[a-zA-Z]/.test(newLetter)) {
+                $('#gameResultMsg').html("Only letters from a to z are valid.");
+                $('#gameResultMsg').fadeIn(200).delay(3000).fadeOut(200);
+                return;
+            }
+            $.ajax(({
+                type: 'GET',
+                url: 'api/GhostWord/' + newLetter,
+                success: function (data) {
+                    $("#resultWord").fadeIn(1);
+                    $('#resultWord').html(data[0]);
+                    $('#gameResultLbl').html(data[1]);
+                    $('#gameResultMsg').html(data[2]);
+                    if (data[1] != "") {
+                        $('#gameResultLbl').fadeIn(200);
+                        $('#gameResultMsg').fadeIn(200);
+                        document.getElementById("playerLetterInput").disabled = true;
+                        document.getElementById("submitBtn").textContent = "New Game";
+                        $("#submitBtn").unbind("click");
+                        $("#submitBtn").click(function () {
+                            newGame();
+                        });
+                    }
+
+                }
+            }))
+            $('#playerLetterInput').val("");
+        }
+
+        $(window).on("load", newGame);
+
+        //$(document).ready(function () {
+            
+        //    newGame();
+        //    //$('#submitBtn').on('click', function () {
+                
+        //    //});
+
+        //});
+
+    </script>
+</body>
+</html>
