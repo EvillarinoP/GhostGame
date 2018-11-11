@@ -38,14 +38,8 @@ namespace GhostGame.Models
                     }
                 }
             }
-            catch (FileNotFoundException)
-            {
-
-            }
-            catch (IOException ex)
-            {
-
-            }
+            catch (FileNotFoundException){} // Exceptions will prevent the dictionary from loading, which will throw and exception on 
+            catch (IOException){}           // the GhostGame and trigger an "InternalServerError" response
         }
 
         /// <summary>
