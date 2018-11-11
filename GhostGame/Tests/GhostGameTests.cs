@@ -165,9 +165,36 @@ namespace GhostGame.Tests
             LetterNode node = dict.Words["r"];
             int count = node.leafNodeCount();
 
-            Assert.AreEqual(count, 2);
+            Assert.AreEqual(count, 3);
         }
 
+        [Test]
+        public void TestsChild()
+        {
+            GhostDictionary dict = new GhostDictionary(_customPath);
+            LetterNode node = dict.Words["r"];
+            LetterNode child = node.child("a");
 
+            Assert.AreEqual(child.Letter, "a");
+        }
+
+        [Test]
+        public void TestsForcedWin()
+        {
+            GhostDictionary dict = new GhostDictionary(_customPath);
+            ComputerPlayer cp = new ComputerPlayer();
+            LetterNode node = dict.Words["r"];
+
+            LetterNode sub1 = dict.Words["r"];
+            LetterNode sub2 = sub1.Children["a"];
+            LetterNode sub3 = sub2.Children["n"];
+            LetterNode sub4 = sub3.Children["d"];
+
+            LetterNode winNode1 = cp.forcedWin(node);
+            LetterNode winNode2 = cp.forcedWin(sub4);
+
+            Assert.AreEqual(winNode1, null);
+            Assert.AreEqual(winNode2.Letter, "o");
+        }
     }
 }

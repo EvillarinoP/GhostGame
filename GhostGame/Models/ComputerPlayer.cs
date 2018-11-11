@@ -40,7 +40,7 @@ namespace GhostGame.Models
         }
 
         /// <summary>
-        /// This method tries to find a child from the current node that will ensure the computers victory
+        /// This method tries to find a child from the current node that will ensure the computers victory. If it is not found, returns null
         /// </summary>
         /// <param name="node"></param>
         /// <returns></returns>
