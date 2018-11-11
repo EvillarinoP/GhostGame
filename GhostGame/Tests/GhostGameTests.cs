@@ -20,6 +20,7 @@ namespace GhostGame.Tests
 
         // Assert
         private string _path = @"C:\GhostGame\ghostGameDict.txt";
+        private string _customPath = @"C:\GhostGame\customDict.txt";
 
         [Test]
         public void GhostGame_LoadsDictionary()
@@ -98,6 +99,37 @@ namespace GhostGame.Tests
 
             Assert.IsTrue(isStem);
         }
+
+        [Test]
+        public void ObtainsMaximumLength()
+        {
+            string word = "rand";
+
+            LetterNode node = new LetterNode(word);
+            int length = node.maximumLength();
+
+            Assert.AreEqual(length, 4);
+        }
+
+        [Test]
+        public void GetsMaximumLengthNode()
+        {
+
+            GhostDictionary dict = new GhostDictionary(_customPath);
+            ComputerPlayer player = new ComputerPlayer();
+            player.Dictionary = dict;
+
+            LetterNode sub1 = dict.Words["r"];
+            LetterNode sub2 = sub1.Children["a"];
+            LetterNode sub3 = sub2.Children["n"];
+            LetterNode sub4 = sub3.Children["d"];
+
+            LetterNode longest = player.longestWord(sub4);
+
+            Assert.AreEqual(longest.Letter, "i");
+
+        }
+
         //public void WordAdded()
         //{
         //    // Arrange

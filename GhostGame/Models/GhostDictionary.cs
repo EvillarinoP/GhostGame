@@ -15,7 +15,10 @@ namespace GhostGame.Models
     {
         private static readonly int MIN_WORD_LENGHT = 4;
         private Dictionary<string, LetterNode> _words = new Dictionary<string, LetterNode>(); // This is the whole dictionary
-        
+
+        // Public accessor only for testing
+        public Dictionary<string, LetterNode> Words { get { return _words; }set { _words = value; } }
+
         /// <summary>
         /// Creates a new instance of a GhostDictionary
         /// </summary>
